@@ -5,6 +5,7 @@
     <title>Chat Rooms</title>
 </head>
 <body>
+    <h4>Hello, {{ user.username|default:'Anonymous Guest' }}!</h4>
     What chat room would you like to enter?<br>
     <input id="room-name-input" type="text" size="100"><br>
     <input id="room-name-submit" type="button" value="Enter">
