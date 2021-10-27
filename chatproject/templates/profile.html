@@ -21,6 +21,20 @@
             + '/'
         );
 
+        const current_username = '{{user.username}}';
+        var sender;
+
+        {% for chat in chat_messages %}
+
+        if( '{{ chat.sender }}' == current_username ){
+            sender = 'you';
+        } else {
+            sender = '{{ chat.sender }}';
+        }
+        document.querySelector('#chat-log').value += (sender + ': ' + '{{ chat.message }}' + '\n');
+
+        {% endfor %}
+
         chatSocket.onmessage = function(e) {
             const data = JSON.parse(e.data);
             const current_username = '{{user.username}}';

@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.contrib.auth.models import User
 from .forms import CustomUserCreationForm
+from .models import ChatMessages
 
 @login_required
 def index(request):
@@ -10,7 +11,8 @@ def index(request):
 
 @login_required
 def room(request, room_name):
-    return render(request, 'room.html', {'room_name': room_name})
+    chat_messages = ChatMessages.objects.filter(room_name=room_name)
+    return render(request, 'room.html', {'room_name': room_name, 'chat_messages': chat_messages})
 
 def register(request):
     if request.method == "GET":
@@ -41,5 +43,6 @@ def register(request):
         return redirect('register')
 @login_required
 def profile(request, user_name):
+    chat_messages = ChatMessages.objects.filter(room_name=user_name)
     user = User.objects.get(username=user_name)
-    return render(request, 'profile.html', {'user_name': user})
+    return render(request, 'profile.html', {'user_name': user, 'chat_messages':chat_messages})

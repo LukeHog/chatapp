@@ -1,6 +1,8 @@
 import json
+from datetime import datetime
 from channels.generic.websocket import WebsocketConsumer
 from asgiref.sync import async_to_sync
+from .models import ChatMessages
 
 class ChatConsumer(WebsocketConsumer):
     def connect(self):
@@ -24,6 +26,9 @@ class ChatConsumer(WebsocketConsumer):
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
         sender = text_data_json['sender']
+
+        chat = ChatMessages(sender=sender, room_name=self.room_name, message=message, timestamp=datetime.now())
+        chat.save()
 
         async_to_sync(self.channel_layer.group_send)(
             self.room_group_name,
