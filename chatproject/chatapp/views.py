@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.contrib.auth.models import User
+from django.contrib.auth.signals import user_logged_in, user_logged_out
+from django.dispatch import receiver
 from .forms import CustomUserCreationForm
 from .models import ChatMessages
 
@@ -46,3 +48,13 @@ def profile(request, user_name):
     chat_messages = ChatMessages.objects.filter(room_name=user_name)
     user = User.objects.get(username=user_name)
     return render(request, 'profile.html', {'user_name': user, 'chat_messages':chat_messages})
+
+@receiver(user_logged_in)
+def got_online(sender, user, request, **kwargs):
+    user.profile.is_online = True
+    user.profile.save()
+
+@receiver(user_logged_out)
+def got_offline(sender, user, request, **kwargs):
+    user.profile.is_online = False
+    user.profile.save()
