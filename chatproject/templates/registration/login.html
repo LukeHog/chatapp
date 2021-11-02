@@ -1,18 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Welcome</title>
-</head>
-<body>
-    <h2>Welcome to Chapp!!!</h2>
+{% extends 'base.html' %}
 
-    <form method="post">
-        {% csrf_token %}
-        {{form.as_p}}
-        <input type="submit" value="Login">
-    </form>
+{% block content %}
+    <div class="py-5 text-center" style="background-image: url('https://static.pingendo.com/cover-bubble-dark.svg');background-size:cover;" >
+    <div class="container">
+      <div class="row">
+        <div class="mx-auto col-md-6 col-10 bg-white p-5">
+          <h2 class="mb-3 shadow-none font-weight-bold font-italic">Welcome to Chapp</h2>
+          <h3 class="mb-1">Log in</h3>
+          <form method="post">
+              {% csrf_token %}
+            <div class="form-group"> <input type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" placeholder="Username" required="" id="id_username" class="form-control"> </div>
+            <div class="form-group mb-3"> <input type="password" name="password" placeholder="Password" id="id_password" autocomplete="current-password" class="form-control" required=""> <small class="form-text text-muted text-right">
+                <a href="#"> Recover password</a>
+              </small> </div> <button type="submit" class="btn btn-primary">Log In</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
     <a href="{% url 'register' %}">Register</a>
-</body>
-</html>
+{% endblock %}

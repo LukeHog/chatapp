@@ -22,19 +22,25 @@
     <div class="container"> <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse" data-target="#navbar12">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbar12"> <a class="navbar-brand d-none d-md-block" href="#">
+      <div class="collapse navbar-collapse" id="navbar12"> <a class="navbar-brand d-none d-md-block" href="% url 'index' %}">
           <i class="fa d-inline fa-lg fa-circle"></i>
           <b> Chapp</b>
         </a>
         <ul class="navbar-nav mx-auto">
-          <li class="nav-item"> <a class="nav-link" href="#">MyProfile</a> </li>
+          <li class="nav-item"> <a class="nav-link" href="{% url 'index' %}">Home</a> </li>
           <li class="nav-item"> <a class="nav-link" href="#">About</a> </li>
         </ul>
         <ul class="navbar-nav">
-          <li class="nav-item" style=""> <a class="nav-link" href="#">Log in</a> </li>
-          <li class="nav-item"> <a class="nav-link text-primary" href="#">Register</a> </li>
-          <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Dropdown link </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"> <a class="dropdown-item" href="#">Change Password</a> <a class="dropdown-item" href="#">Logout</a> </div>
+          {% if user.is_authenticated %}
+          {% else %}
+          <li class="nav-item" style=""> <a class="nav-link" href="{% url 'login' %}">Log in</a> </li>
+          <li class="nav-item"> <a class="nav-link text-primary" href="{% url 'register' %}">Register</a> </li>
+          {% endif %}
+          <li class="nav-item dropdown">
+            {% if user.is_authenticated %} <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Options</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"> <a class="dropdown-item" href="{% url 'profile' user_name=user.username%}">My Profile</a> <a class="dropdown-item" href="#">Change Password</a> <a class="dropdown-item" href="{% url 'logout' %}">Logout</a> </div>
+            {% else %}
+            {% endif %}
           </li>
         </ul>
       </div>
@@ -47,11 +53,11 @@
       <div class="row">
         <div class="col-md-12 text-center d-md-flex align-items-center">
           <ul class="nav d-flex justify-content-center">
-            <li class="nav-item"> <a class="nav-link active" href="#">Home</a> </li>
+            <li class="nav-item"> <a class="nav-link active" href="% url 'index' %}">Home</a> </li>
             <li class="nav-item"> <a class="nav-link" href="#">Features</a> </li>
             <li class="nav-item"> <a class="nav-link" href="#">Pricing</a> </li>
-          </ul> <i class="d-block fa fa-stop-circle fa-3x mx-auto text-dark"></i>
-          <p class="mb-0 py-1">©2018 Pingendo All rights reserved</p>
+          </ul> <i class="d-block fa fa-stop-circle fa-3x mx-auto text-dark">Chapp</i>
+          <p class="mb-0 py-1">©2021 Chapp All rights reserved</p>
         </div>
       </div>
     </div>
@@ -59,7 +65,6 @@
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  <pingendo onclick="window.open('https://pingendo.com/', '_blank')" style="cursor:pointer;position: fixed;bottom: 20px;right:20px;padding:4px;background-color: #00b0eb;border-radius: 8px; width:220px;display:flex;flex-direction:row;align-items:center;justify-content:center;font-size:14px;color:white">Made with Pingendo Free&nbsp;&nbsp;<img src="https://pingendo.com/site-assets/Pingendo_logo_big.png" class="d-block" alt="Pingendo logo" height="16"></pingendo>
 </body>
 
 </html>

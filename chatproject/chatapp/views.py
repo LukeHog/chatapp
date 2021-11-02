@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.signals import user_logged_in, user_logged_out
 from django.dispatch import receiver
 from .forms import CustomUserCreationForm
-from .models import ChatMessages
+from .models import ChatMessages, Profile
 
 @login_required
 def index(request):
@@ -38,8 +38,9 @@ def register(request):
 
             except User.DoesNotExist:
                 user = User.objects.create_user(uservalue, password=passwordvalue1, email=emailvalue)
-
+            user_profile = Profile(user=user)
             user.save()
+            user_profile.save()
             login(request, user)
             return redirect('index')
         return redirect('register')
