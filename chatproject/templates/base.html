@@ -37,7 +37,9 @@
           <li class="nav-item"> <a class="nav-link text-primary" href="{% url 'register' %}">Register</a> </li>
           {% endif %}
           <li class="nav-item dropdown">
-            {% if user.is_authenticated %} <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Options</a>
+            {% if user.is_authenticated %}
+            <li class="nav-item"> <a class="nav-link text-secondary" href="{% url 'profile' user_name=user.username%}">Hello, {{user.username}}!</a> </li>
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Options</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"> <a class="dropdown-item" href="{% url 'profile' user_name=user.username%}">My Profile</a> <a class="dropdown-item" href="#">Change Password</a> <a class="dropdown-item" href="{% url 'logout' %}">Logout</a> </div>
             {% else %}
             {% endif %}
